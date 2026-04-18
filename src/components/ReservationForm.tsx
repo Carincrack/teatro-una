@@ -23,8 +23,38 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   onReset,
 }) => {
   const [inputValue, setInputValue] = useState<string>('1');
+  const [inputError, setInputError] = useState<string>('');
 
-  const maxRowSize = Math.max(...rows.map((r) => r.seats.length));
+  const maxRowSize = 20; // Máximo de asientos a reservar
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    // Si está vacío, permitir
+    if (value === '') {
+      setInputValue('');
+      setInputError('');
+      return;
+    }
+
+    const numValue = parseInt(value, 10);
+
+    // Si es inválido, no hacer nada
+    if (isNaN(numValue)) {
+      return;
+    }
+
+    // Si excede el máximo
+    if (numValue > maxRowSize) {
+      setInputError(`❌ Máximo 20 asientos permitidos por reserva.`);
+      // No actualizar el valor, mantener el anterior
+      return;
+    }
+
+    // Si es válido, actualizar
+    setInputValue(value);
+    setInputError('');
+  };
 
   const handleSuggest = () => {
     const n = parseInt(inputValue, 10);
@@ -91,11 +121,11 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
           min={1}
           max={maxRowSize}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={handleInputChange}
           style={{
             width: '100%',
             backgroundColor: '#1a1a1a',
-            border: '1px solid #2d3d35',
+            border: inputError ? '1px solid #c04040' : '1px solid #2d3d35',
             borderRadius: '6px',
             color: '#f0f0f0',
             padding: '8px 10px',
@@ -105,6 +135,25 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
           }}
         />
       </div>
+
+      {/* Mensaje de error si excede máximo */}
+      {inputError && (
+        <div
+          style={{
+            backgroundColor: 'rgba(192,64,64,0.2)',
+            border: '1px solid #c04040',
+            borderRadius: '6px',
+            padding: '8px',
+            marginBottom: '10px',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '0.75rem',
+            color: '#e07070',
+            lineHeight: '1.3',
+          }}
+        >
+          {inputError}
+        </div>
+      )}
 
       {/* Botón: Buscar asientos */}
       <button
