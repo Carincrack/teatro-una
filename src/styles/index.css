@@ -1,0 +1,68 @@
+/* ============================================================
+   styles/index.css
+   Estilos globales y animaciones
+   ============================================================ */
+
+/* Reset y base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #0f0f0f;
+  color: #f0f0f0;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #059669;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
+}
+
+/* ── Animaciones ── */
+
+/* Parpadeo de luces del escenario */
+@keyframes pulse {
+  0%   { opacity: 0.6; transform: scale(0.9); }
+  100% { opacity: 1;   transform: scale(1.1); }
+}
+
+/* Parpadeo de asientos sugeridos */
+@keyframes seatPulse {
+  0%   { box-shadow: 0 0 6px rgba(16, 185, 129, 0.4); }
+  100% { box-shadow: 0 0 16px rgba(16, 185, 129, 0.9); }
+}
+
+/* Entrada suave de la página */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+main {
+  animation: fadeInUp 0.5s ease both;
+}
+
+/* Inputs: quitar outline nativo de Bootstrap */
+input:focus {
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.35) !important;
+  border-color: #10b981 !important;
+}
+
+/* Sobrescribir color de texto de Bootstrap en dark mode */
+.navbar-nav .nav-link:focus {
+  color: #10b981 !important;
+}
