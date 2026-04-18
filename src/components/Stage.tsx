@@ -18,7 +18,7 @@ const Stage: React.FC = () => {
           maxWidth: '700px',
           boxShadow: '0 -4px 30px rgba(16,185,129,0.25), inset 0 2px 8px rgba(167,243,208,0.1)',
           position: 'relative',
-          marginLeft: '2%',                  // forzado a la izquierda
+          marginLeft: '5%',                  // forzado a la izquierda
           marginRight: 'auto',
         }}
       >
@@ -63,7 +63,7 @@ const Stage: React.FC = () => {
           background: 'linear-gradient(180deg, #10b981 0%, #047857 100%)',
           minWidth: '60%',
           maxWidth: '700px',
-          marginLeft: '2%',      // ← alineado a la izquierda
+          marginLeft: '5%',      // ← alineado a la izquierda
           marginRight: 'auto',
           borderRadius: '0 0 4px 4px',
           boxShadow: '0 6px 20px rgba(16,185,129,0.3)',

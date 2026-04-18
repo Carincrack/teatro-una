@@ -71,7 +71,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
         backgroundColor: '#111',
         border: '1px solid #1a1a1a',
         borderRadius: '12px',
-        padding: '18px',
+        padding: '14px',
         maxWidth: '100%',
       }}
     >
@@ -79,10 +79,10 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
         style={{
           fontFamily: "'Playfair Display', serif",
           color: '#10b981',
-          fontSize: '1rem',
-          marginBottom: '14px',
+          fontSize: '0.9rem',
+          marginBottom: '10px',
           borderBottom: '1px solid #1a1a1a',
-          paddingBottom: '10px',
+          paddingBottom: '8px',
         }}
       >
         🎟️ Reservar
@@ -92,25 +92,25 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
       <p
         style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: '0.7rem',
+          fontSize: '0.65rem',
           color: '#888',
-          marginBottom: '10px',
-          lineHeight: '1.3',
+          marginBottom: '8px',
+          lineHeight: '1.2',
         }}
       >
-        💡 Clickea asientos o busca consecutivos.
+        💡 Clickea o busca.
       </p>
 
       {/* Input cantidad de asientos */}
-      <div style={{ marginBottom: '10px' }}>
+      <div style={{ marginBottom: '8px' }}>
         <label
           htmlFor="seatCount"
           style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.75rem',
+            fontSize: '0.7rem',
             color: '#ccc',
             display: 'block',
-            marginBottom: '4px',
+            marginBottom: '3px',
           }}
         >
           Cantidad (máx. {maxRowSize}):
@@ -128,9 +128,9 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
             border: inputError ? '1px solid #c04040' : '1px solid #2d3d35',
             borderRadius: '6px',
             color: '#f0f0f0',
-            padding: '8px 10px',
+            padding: '6px 8px',
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.9rem',
+            fontSize: '0.85rem',
             outline: 'none',
           }}
         />
@@ -143,12 +143,12 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
             backgroundColor: 'rgba(192,64,64,0.2)',
             border: '1px solid #c04040',
             borderRadius: '6px',
-            padding: '8px',
-            marginBottom: '10px',
+            padding: '6px',
+            marginBottom: '8px',
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.75rem',
+            fontSize: '0.7rem',
             color: '#e07070',
-            lineHeight: '1.3',
+            lineHeight: '1.2',
           }}
         >
           {inputError}
@@ -166,12 +166,12 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
           color: '#fff',
           fontFamily: "'DM Sans', sans-serif",
           fontWeight: 700,
-          fontSize: '0.8rem',
+          fontSize: '0.75rem',
           letterSpacing: '0.05em',
-          padding: '10px',
+          padding: '8px',
           cursor: 'pointer',
           transition: 'background-color 0.2s',
-          marginBottom: '10px',
+          marginBottom: '8px',
           textTransform: 'uppercase',
         }}
         onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#059669')}
@@ -198,10 +198,10 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                 : '#059669'
             }`,
             borderRadius: '6px',
-            padding: '8px',
-            marginBottom: '10px',
+            padding: '6px',
+            marginBottom: '8px',
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.75rem',
+            fontSize: '0.7rem',
             color:
               messageType === 'success'
                 ? '#a7f3d0'
@@ -217,13 +217,13 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
 
       {/* Asientos seleccionados */}
       {selectedSeats.size > 0 && (
-        <div style={{ marginBottom: '10px' }}>
+        <div style={{ marginBottom: '8px' }}>
           <p
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.7rem',
+              fontSize: '0.65rem',
               color: '#888',
-              marginBottom: '4px',
+              marginBottom: '3px',
             }}
           >
             Sugeridos:
@@ -251,13 +251,13 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
 
       {/* Asientos confirmados */}
       {confirmedSeats.size > 0 && (
-        <div style={{ marginBottom: '10px' }}>
+        <div style={{ marginBottom: '8px' }}>
           <p
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.7rem',
+              fontSize: '0.65rem',
               color: '#888',
-              marginBottom: '4px',
+              marginBottom: '3px',
             }}
           >
             Confirmados:
@@ -285,7 +285,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
       )}
 
       {/* Botones: Confirmar y Resetear */}
-      <div style={{ display: 'flex', gap: '8px' }}>
+      <div style={{ display: 'flex', gap: '6px' }}>
         {selectedSeats.size > 0 && (
           <button
             onClick={onConfirm}
@@ -297,9 +297,9 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
               color: '#fff',
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 700,
-              fontSize: '0.75rem',
+              fontSize: '0.7rem',
               letterSpacing: '0.05em',
-              padding: '8px',
+              padding: '6px',
               cursor: 'pointer',
               transition: 'background-color 0.2s',
               textTransform: 'uppercase',
@@ -321,8 +321,8 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
             color: '#6ee7b7',
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 500,
-            fontSize: '0.75rem',
-            padding: '8px',
+            fontSize: '0.7rem',
+            padding: '6px',
             cursor: 'pointer',
             transition: 'border-color 0.2s, color 0.2s',
             textTransform: 'uppercase',

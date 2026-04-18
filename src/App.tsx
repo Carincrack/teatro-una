@@ -192,16 +192,16 @@ const App: React.FC = () => {
         <Stage />
 
         {/* Layout: Mapa de asientos (grande) + Panel derecho (compacto) */}
-        <div className="row g-3 align-items-start">
+        <div className="row g-2 align-items-start">
 
           {/* Mapa de asientos - PRINCIPAL */}
-          <div className="col-lg-7">
+          <div className="col-lg-9">
             <div
               style={{
                 backgroundColor: '#111',
                 border: '1px solid #1a1a1a',
                 borderRadius: '12px',
-                padding: '32px 24px',
+                padding: '24px 20px',
               }}
             >
               <h5
@@ -225,7 +225,7 @@ const App: React.FC = () => {
           </div>
 
           {/* Panel lateral derecho - Formulario + Estadísticas */}
-          <div className="col-lg-5">
+          <div className="col-lg-3">
             <ReservationForm
               rows={rows}
               reservationState={reservation}
@@ -240,8 +240,8 @@ const App: React.FC = () => {
                 backgroundColor: '#111',
                 border: '1px solid #1a1a1a',
                 borderRadius: '12px',
-                padding: '12px',
-                marginTop: '12px',
+                padding: '10px',
+                marginTop: '8px',
               }}
             >
               <h6
@@ -249,7 +249,7 @@ const App: React.FC = () => {
                   fontFamily: "'Playfair Display', serif",
                   color: '#10b981',
                   fontSize: '0.8rem',
-                  marginBottom: '10px',
+                  marginBottom: '8px',
                 }}
               >
                 📊 Estado
@@ -287,15 +287,16 @@ const App: React.FC = () => {
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    padding: '5px 0',
+                    padding: '4px 0',
                     borderBottom: '1px solid #1a1a1a',
-                    fontSize: '0.75rem',
+                    fontSize: '0.7rem',
                   }}
                 >
                   <span
                     style={{
                       fontFamily: "'DM Sans', sans-serif",
                       color: '#777',
+                      fontSize: '0.7rem',
                     }}
                   >
                     {label}
@@ -305,6 +306,7 @@ const App: React.FC = () => {
                       fontFamily: "'DM Sans', sans-serif",
                       fontWeight: 700,
                       color,
+                      fontSize: '0.75rem',
                     }}
                   >
                     {value}
