@@ -57,15 +57,20 @@ export function generateRows(): Row[] {
 }
 
 /**
- * suggest(n, rows) — Ejercicio 2
+ * suggest(n, rows) — Ejercicio 2 (Mejorado)
  *
  * Busca los mejores asientos disponibles para una reserva de `n` asientos.
  *
- * Reglas:
- *  1. Si n supera el tamaño máximo de cualquier fila → retorna Set vacío.
- *  2. Si ninguna fila tiene n asientos libres consecutivos → retorna Set vacío.
- *  3. Se elige la fila más cercana al CENTRO del teatro.
- *  4. En caso de empate de distancia, se prefiere la fila anterior (más cercana al escenario).
+ * Estrategia:
+ *  1. Primero: Intenta encontrar n asientos consecutivos en la misma fila
+ *     (preferencia: fila más cercana al centro del teatro)
+ *
+ *  2. Si falla: Busca los n asientos disponibles más cercanos entre sí,
+ *     permitiendo que estén distribuidos en filas cercanas (verticalmente).
+ *     Prioriza:
+ *     a) Minimizar la distancia total (suma de distancias de cada asiento al centro)
+ *     b) Minimizar gaps horizontales dentro de filas
+ *     c) Mantener filas adyacentes o lo más próximas posible
  *
  * @param n     Número de asientos a reservar
  * @param rows  Matriz de filas del teatro
@@ -75,39 +80,37 @@ export function suggest(n: number, rows: Row[]): Set<number> {
   // --- Validación 1: n debe ser positivo ---
   if (n <= 0) return new Set<number>();
 
-  // --- Validación 2: n no puede superar el tamaño máximo de fila ---
-  const maxRowSize = Math.max(...rows.map((r) => r.seats.length));
-  if (n > maxRowSize) return new Set<number>();
+  // --- Validación 2: n no puede superar el tamaño máximo disponible total ---
+  const totalFreeSeats = rows.reduce((sum, row) => sum + row.seats.filter(s => !s.estado).length, 0);
+  if (n > totalFreeSeats) return new Set<number>();
 
   // --- Índice del centro del teatro ---
-  // Con 10 filas (0–9) el centro está entre índices 4 y 5 → centro = 4.5
   const centerIndex = (rows.length - 1) / 2;
 
-  // --- Candidatos: filas que pueden alojar n asientos consecutivos libres ---
+  // ============================================================
+  // FASE 1: Intenta encontrar n asientos consecutivos en una fila
+  // ============================================================
+
   interface Candidate {
     distanceToCenter: number;
     rowIndex: number;
-    startSeatIndex: number; // primer asiento del bloque disponible
+    startSeatIndex: number;
   }
 
-  const candidates: Candidate[] = [];
+  const consecutiveCandidates: Candidate[] = [];
 
   rows.forEach((row, rowIndex) => {
     const seats = row.seats;
-
-    // Buscar el primer bloque de n asientos libres consecutivos en esta fila
     let consecutiveFree = 0;
     let blockStart = -1;
 
     for (let s = 0; s < seats.length; s++) {
       if (!seats[s].estado) {
-        // Asiento libre
         if (consecutiveFree === 0) blockStart = s;
         consecutiveFree++;
 
         if (consecutiveFree === n) {
-          // ¡Encontrado! Registrar candidato y dejar de buscar en esta fila
-          candidates.push({
+          consecutiveCandidates.push({
             distanceToCenter: Math.abs(rowIndex - centerIndex),
             rowIndex,
             startSeatIndex: blockStart,
@@ -115,32 +118,88 @@ export function suggest(n: number, rows: Row[]): Set<number> {
           break;
         }
       } else {
-        // Asiento ocupado → reiniciar contador
         consecutiveFree = 0;
         blockStart = -1;
       }
     }
   });
 
-  // --- Sin candidatos → Set vacío ---
-  if (candidates.length === 0) return new Set<number>();
+  // Si encontramos candidatos consecutivos → usar el mejor
+  if (consecutiveCandidates.length > 0) {
+    consecutiveCandidates.sort((a, b) => {
+      if (a.distanceToCenter !== b.distanceToCenter) {
+        return a.distanceToCenter - b.distanceToCenter;
+      }
+      return a.rowIndex - b.rowIndex;
+    });
 
-  // --- Ordenar por distancia al centro (menor primero); empate → fila anterior ---
-  candidates.sort((a, b) => {
+    const best = consecutiveCandidates[0];
+    const bestRow = rows[best.rowIndex];
+    const result = new Set<number>();
+
+    for (let i = 0; i < n; i++) {
+      result.add(bestRow.seats[best.startSeatIndex + i].id);
+    }
+
+    return result;
+  }
+
+  // ============================================================
+  // FASE 2: Si no hay n consecutivos, busca los más cercanos
+  // ============================================================
+
+  interface SeatOption {
+    id: number;
+    rowIndex: number;
+    seatIndex: number;
+    distanceToCenter: number;
+  }
+
+  // Recopilar todos los asientos libres con su información
+  const allFreeSeats: SeatOption[] = [];
+
+  rows.forEach((row, rowIndex) => {
+    row.seats.forEach((seat, seatIndex) => {
+      if (!seat.estado) {
+        allFreeSeats.push({
+          id: seat.id,
+          rowIndex,
+          seatIndex,
+          distanceToCenter: Math.abs(rowIndex - centerIndex),
+        });
+      }
+    });
+  });
+
+  // Ordenar por proximidad al centro (tanto vertical como horizontalmente)
+  // Prioridad: 1) fila cercana al centro, 2) asientos cercanos al centro de la fila
+  allFreeSeats.sort((a, b) => {
+    // Comparar distancia vertical al centro del teatro
     if (a.distanceToCenter !== b.distanceToCenter) {
       return a.distanceToCenter - b.distanceToCenter;
     }
-    // Empate: preferir la fila de menor índice (más cerca del escenario → centro)
+
+    // Si están en la misma distancia vertical, compararlos por proximidad al centro de su fila
+    const rowA = rows[a.rowIndex];
+    const rowB = rows[b.rowIndex];
+    const centerSeatIndexA = (rowA.seats.length - 1) / 2;
+    const centerSeatIndexB = (rowB.seats.length - 1) / 2;
+
+    const distA = Math.abs(a.seatIndex - centerSeatIndexA);
+    const distB = Math.abs(b.seatIndex - centerSeatIndexB);
+
+    if (distA !== distB) {
+      return distA - distB;
+    }
+
+    // Empate: preferir fila anterior (más cerca del escenario)
     return a.rowIndex - b.rowIndex;
   });
 
-  // --- Mejor candidato ---
-  const best = candidates[0];
-  const bestRow = rows[best.rowIndex];
+  // Tomar los primeros n asientos más cercanos
   const result = new Set<number>();
-
-  for (let i = 0; i < n; i++) {
-    result.add(bestRow.seats[best.startSeatIndex + i].id);
+  for (let i = 0; i < n && i < allFreeSeats.length; i++) {
+    result.add(allFreeSeats[i].id);
   }
 
   return result;

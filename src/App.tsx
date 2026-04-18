@@ -34,22 +34,26 @@ const App: React.FC = () => {
    */
   const handleSuggest = useCallback((seats: Set<number>, count: number) => {
     if (seats.size === 0) {
+      const totalFree = rows.reduce((sum, row) => sum + row.seats.filter(s => !s.estado).length, 0);
       setReservation((prev) => ({
         ...prev,
         selectedSeats: new Set<number>(),
         requestedCount: count,
         message:
-          count > Math.max(...rows.map((r) => r.seats.length))
-            ? `❌ No existe ninguna fila con ${count} asientos. Máximo disponible: ${Math.max(...rows.map((r) => r.seats.length))}.`
-            : `❌ No hay ${count} asientos consecutivos libres en ninguna fila.`,
+          count > totalFree
+            ? `❌ No hay ${count} asientos disponibles. Asientos libres en total: ${totalFree}.`
+            : `❌ No hay asientos disponibles en este momento.`,
         messageType: 'error',
       }));
     } else {
+      const isConsecutive = seats.size === count;
       setReservation((prev) => ({
         ...prev,
         selectedSeats: seats,
         requestedCount: count,
-        message: `✨ Se encontraron ${seats.size} asientos consecutivos ideales. Revísalos en el mapa y confirma.`,
+        message: isConsecutive
+          ? `✨ Se encontraron ${seats.size} asientos consecutivos ideales. Revísalos en el mapa y confirma.`
+          : `✨ Se encontraron ${seats.size} asientos disponibles (distribuidos). Los más cercanos para ti. ¡Revísalos y confirma!`,
         messageType: 'info',
       }));
     }
