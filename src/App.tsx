@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import Stage from './components/Stage';
 import SeatMap from './components/SeatMap';
 import ReservationForm from './components/ReservationForm';
+import Footer from './components/Footer';
 import { generateRows } from './utils/seatAlgorithm';
 import { Row, ReservationState } from './types';
 
@@ -183,11 +184,11 @@ const App: React.FC = () => {
         {/* Escenario */}
         <Stage />
 
-        {/* Layout: Mapa de asientos + Formulario */}
-        <div className="row g-4 align-items-start">
+        {/* Layout: Mapa de asientos (grande) + Panel derecho (compacto) */}
+        <div className="row g-3 align-items-start">
 
-          {/* Mapa de asientos */}
-          <div className="col-lg-7">
+          {/* Mapa de asientos - PRINCIPAL */}
+          <div className="col-lg-8">
             <div
               style={{
                 backgroundColor: '#111',
@@ -216,8 +217,8 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Panel de reserva */}
-          <div className="col-lg-5">
+          {/* Panel lateral derecho - Formulario + Estadísticas */}
+          <div className="col-lg-4">
             <ReservationForm
               rows={rows}
               reservationState={reservation}
@@ -232,23 +233,23 @@ const App: React.FC = () => {
                 backgroundColor: '#111',
                 border: '1px solid #1a1a1a',
                 borderRadius: '12px',
-                padding: '18px',
-                marginTop: '16px',
+                padding: '12px',
+                marginTop: '12px',
               }}
             >
               <h6
                 style={{
                   fontFamily: "'Playfair Display', serif",
                   color: '#10b981',
-                  fontSize: '0.9rem',
-                  marginBottom: '14px',
+                  fontSize: '0.8rem',
+                  marginBottom: '10px',
                 }}
               >
-                📊 Estado del teatro
+                📊 Estado
               </h6>
               {[
                 {
-                  label: 'Total asientos',
+                  label: 'Total',
                   value: rows.reduce((acc, r) => acc + r.seats.length, 0),
                   color: '#f0f0f0',
                 },
@@ -269,7 +270,7 @@ const App: React.FC = () => {
                   color: '#888',
                 },
                 {
-                  label: 'Confirmados hoy',
+                  label: 'Mi reserva',
                   value: reservation.confirmedSeats.size,
                   color: '#10b981',
                 },
@@ -279,14 +280,14 @@ const App: React.FC = () => {
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    padding: '6px 0',
+                    padding: '5px 0',
                     borderBottom: '1px solid #1a1a1a',
+                    fontSize: '0.75rem',
                   }}
                 >
                   <span
                     style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: '0.82rem',
                       color: '#777',
                     }}
                   >
@@ -295,7 +296,6 @@ const App: React.FC = () => {
                   <span
                     style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: '0.9rem',
                       fontWeight: 700,
                       color,
                     }}
@@ -308,6 +308,9 @@ const App: React.FC = () => {
           </div>
         </div>
       </main>
+
+      {/* ── Footer ── */}
+      <Footer />
     </div>
   );
 };

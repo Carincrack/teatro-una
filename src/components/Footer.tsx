@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
     <footer
       style={{
         backgroundColor: '#0a0a0a',
-        borderTop: '1px solid #c9a84c',
+        borderTop: '1px solid #10b981',
         padding: '36px 24px 20px',
         marginTop: '60px',
       }}
@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
                     fontFamily: "'Playfair Display', serif",
                     fontWeight: 900,
                     fontSize: '1.2rem',
-                    color: '#c9a84c',
+                    color: '#10b981',
                     margin: 0,
                     letterSpacing: '0.05em',
                   }}
@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
             <h6
               style={{
                 fontFamily: "'Playfair Display', serif",
-                color: '#c9a84c',
+                color: '#10b981',
                 fontSize: '0.95rem',
                 letterSpacing: '0.08em',
                 marginBottom: '16px',
@@ -118,7 +118,7 @@ const Footer: React.FC = () => {
             <h6
               style={{
                 fontFamily: "'Playfair Display', serif",
-                color: '#c9a84c',
+                color: '#10b981',
                 fontSize: '0.95rem',
                 letterSpacing: '0.08em',
                 marginBottom: '16px',
