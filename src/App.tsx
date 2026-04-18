@@ -9,6 +9,7 @@ import Stage from './components/Stage';
 import SeatMap from './components/SeatMap';
 import ReservationForm from './components/ReservationForm';
 import Footer from './components/Footer';
+import CurtainIntro from './components/CurtainIntro';
 import { generateRows } from './utils/seatAlgorithm';
 import { Row, ReservationState } from './types';
 
@@ -29,6 +30,9 @@ const App: React.FC = () => {
 
   // Estado de la reserva actual
   const [reservation, setReservation] = useState<ReservationState>(initialReservationState);
+
+  // Estado del telón de inicio
+  const [curtainOpened, setCurtainOpened] = useState(false);
 
   /**
    * Manejador: recibe la sugerencia de suggest() y actualiza el estado
@@ -141,6 +145,9 @@ const App: React.FC = () => {
         color: '#f0f0f0',
       }}
     >
+      {/* ── Telón de introducción ── */}
+      {!curtainOpened && <CurtainIntro onOpen={() => setCurtainOpened(true)} />}
+
       {/* ── Navbar (Bootstrap) ── */}
       <Navbar />
 
@@ -188,7 +195,7 @@ const App: React.FC = () => {
         <div className="row g-3 align-items-start">
 
           {/* Mapa de asientos - PRINCIPAL */}
-          <div className="col-lg-8">
+          <div className="col-lg-7">
             <div
               style={{
                 backgroundColor: '#111',
@@ -218,7 +225,7 @@ const App: React.FC = () => {
           </div>
 
           {/* Panel lateral derecho - Formulario + Estadísticas */}
-          <div className="col-lg-4">
+          <div className="col-lg-5">
             <ReservationForm
               rows={rows}
               reservationState={reservation}

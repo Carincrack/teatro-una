@@ -66,3 +66,71 @@ input:focus {
 .navbar-nav .nav-link:focus {
   color: #10b981 !important;
 }
+
+/* ── Animaciones del Telón ── */
+
+/* Cortina izquierda se desliza hacia la izquierda */
+@keyframes curtainSlideLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-105%);
+  }
+}
+
+/* Cortina derecha se desliza hacia la derecha */
+@keyframes curtainSlideRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(105%);
+  }
+}
+
+/* Fade in escala para el contenido del telón */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Bounce suave para el contenido */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Glow sutil de luz */
+@keyframes glow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1.2; }
+}
+
+/* Slide in ancho para separador */
+@keyframes slideInWidth {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 80px;
+    opacity: 1;
+  }
+}
+
+/* Fade out suave para contenido del telón */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
